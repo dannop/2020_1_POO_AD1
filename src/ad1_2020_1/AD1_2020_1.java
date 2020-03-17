@@ -19,55 +19,36 @@ class Fase {
     public void adiciona(Cartao c){
         Cartao[] cartoes_att = new Cartao[cartoes.length+1];
         
-        for (Cartao cartao : cartoes) {
-            System.out.print(cartoes.length + " Checando: " + cartao.getNome() + "\n");
-        }
-        
-        for (int i=0; i<cartoes.length; i++){
-            cartoes_att[i] = cartoes[i]; 
-        }
+        System.arraycopy(cartoes, 0, cartoes_att, 0, cartoes.length);
         
         cartoes_att[cartoes.length] = c;
         this.cartoes = cartoes_att;
-        
-        for (Cartao cartao : cartoes_att) {
-            System.out.print(cartoes.length + " Testando: " + cartao.getNome() + "\n");
-        }
-        
-        for (Cartao cartao : cartoes) {
-            System.out.print(cartoes.length + " Verificando: " + cartao.getNome() + "\n");
-        }
-        System.out.print("----------\n");
     }
     
     public void remove(Cartao c){
         Cartao[] cartoes_att = new Cartao[cartoes.length-1];
         int achou = 0;
         
-        for(int i=0; i<cartoes_att.length; i++){
-            if(achou == 0){
-                if(cartoes[i] == c){
-                    cartoes_att[i] = cartoes[i+1];
-                    achou++;
+        if(cartoes_att.length > 0){
+            for(int i=0; i<cartoes_att.length; i++){
+                if(achou == 0){
+                    if(cartoes[i] == c){
+                        cartoes_att[i] = cartoes[i+1];
+                        achou++;
+                    }else{
+                        cartoes_att[i] = cartoes[i];
+                    }
                 }else{
-                    cartoes_att[i] = cartoes[i];
+                    cartoes_att[i] = cartoes[i+1];
                 }
-            }else{
-                cartoes_att[i] = cartoes[i+1];
             }
+            
+            if(achou > 0){
+                this.cartoes = cartoes_att;
+            }
+        } else {
+            this.cartoes = new Cartao[0];
         }
-        
-        if(achou > 0){
-            this.cartoes = cartoes_att;
-        }
-        
-        System.out.print(cartoes.length + " Tentativa de Remover, Achou: " + achou +  "\n");
-        
-        for (Cartao cartao : cartoes) {
-            System.out.print(cartoes.length + " Verificando: " + cartao.getNome() + "\n");
-        }
-        
-        System.out.print("----------\n");
     }
     
     @Override
@@ -81,7 +62,7 @@ class Fase {
 }
 
 class Cartao {
-    static String nome;
+    String nome;
     public Cartao(String n){
         nome = n;
     }
@@ -143,5 +124,4 @@ public class AD1_2020_1 {
         semestre2010_1.encerra(fazerAD1); 
         System.out.println(semestre2010_1);
     }
-    
 }
