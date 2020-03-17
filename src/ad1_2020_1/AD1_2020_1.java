@@ -11,38 +11,70 @@ package ad1_2020_1;
  */
 
 class Fase {
-    static Cartao[] cartoes;
+    Cartao[] cartoes;
     public Fase(){
-        cartoes = new Cartao[10];
+        cartoes = new Cartao[0];
     }
     
     public void adiciona(Cartao c){
-        int i = 0;
-        while(i < 10 && cartoes[i] != null){
-            i++;
+        Cartao[] cartoes_att = new Cartao[cartoes.length+1];
+        
+        for (Cartao cartao : cartoes) {
+            System.out.print(cartoes.length + " Checando: " + cartao.getNome() + "\n");
         }
         
-        if (cartoes[i] == null){
-            cartoes[i] = c;
-        }    
+        for (int i=0; i<cartoes.length; i++){
+            cartoes_att[i] = cartoes[i]; 
+        }
+        
+        cartoes_att[cartoes.length] = c;
+        this.cartoes = cartoes_att;
+        
+        for (Cartao cartao : cartoes_att) {
+            System.out.print(cartoes.length + " Testando: " + cartao.getNome() + "\n");
+        }
+        
+        for (Cartao cartao : cartoes) {
+            System.out.print(cartoes.length + " Verificando: " + cartao.getNome() + "\n");
+        }
+        System.out.print("----------\n");
     }
     
     public void remove(Cartao c){
-        int i = 0;
-        while(i < 10 && cartoes[i] != c){
-            i++;
+        Cartao[] cartoes_att = new Cartao[cartoes.length-1];
+        int achou = 0;
+        
+        for(int i=0; i<cartoes_att.length; i++){
+            if(achou == 0){
+                if(cartoes[i] == c){
+                    cartoes_att[i] = cartoes[i+1];
+                    achou++;
+                }else{
+                    cartoes_att[i] = cartoes[i];
+                }
+            }else{
+                cartoes_att[i] = cartoes[i+1];
+            }
         }
         
-        if (cartoes[i] == c){
-            cartoes[i] = null;
+        if(achou > 0){
+            this.cartoes = cartoes_att;
         }
+        
+        System.out.print(cartoes.length + " Tentativa de Remover, Achou: " + achou +  "\n");
+        
+        for (Cartao cartao : cartoes) {
+            System.out.print(cartoes.length + " Verificando: " + cartao.getNome() + "\n");
+        }
+        
+        System.out.print("----------\n");
     }
     
     @Override
     public String toString() {
         String saida = "";
-        for (int i=0; i<10; i++){
-            saida += cartoes[i].getNome() + "\n"; 
+        for (Cartao cartao : cartoes) {
+            saida += cartao.getNome() + "\n"; 
         }
         return saida;
     }
